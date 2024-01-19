@@ -1,0 +1,171 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    background: #f4f4f4;
+    color: #fff;
+    transition: background 0.5s ease;
+}
+
+.dark-theme {
+    background: #333;
+}
+
+.card {
+    position: relative;
+    width: 95%;
+    max-width: 600px;
+    background: linear-gradient(135deg, #4e54c8, #8f94fb);
+    color: #fff;
+    margin: 100px auto 0;
+    border-radius: 20px;
+    padding: 40px 35px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    transition: background 0.5s ease, max-width 0.3s ease;
+}
+
+/* Add hover effect to weather container */
+.card:hover .weather {
+    transform: scale(1.05); /* Enlarge on hover */
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle,
+.search input,
+.search button {
+    background: #ebfffc;
+    color: #555;
+    border: 0;
+    outline: 0;
+    padding: 10px 25px;
+    height: 60px;
+    border-radius: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.theme-toggle i {
+    font-size: 24px;
+    transition: color 0.5s ease-in-out;
+}
+
+.search {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.search input {
+    flex: 1;
+    margin-right: 16px;
+    font-size: 16px;
+    border: 2px solid #4e54c8;
+    transition: background 0.5s ease-in-out, color 0.5s ease-in-out, border 0.5s ease-in-out;
+}
+
+.search input:focus {
+    background: #fff;
+}
+
+.search button,
+.theme-toggle {
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.search button:hover,
+.theme-toggle:hover {
+    background: #4caf50;
+    color: #fff;
+}
+
+.weather {
+    margin-bottom: 30px;
+    transition: transform 0.3s ease; /* Add transition for the weather container */
+}
+
+.weather-icon {
+    width: 120px;
+    margin: 0 auto;
+}
+
+.weather h1 {
+    font-size: 50px;
+    font-weight: 600;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.weather h2 {
+    font-size: 28px;
+    font-weight: 400;
+    margin-top: -10px;
+}
+
+.details {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    margin-top: 30px;
+}
+
+.col {
+    display: flex;
+    align-items: center;
+    text-align: left;
+}
+
+.col i {
+    font-size: 30px;
+}
+
+.humidity,
+.wind {
+    font-size: 20px;
+    margin-top: -6px;
+    color: #4e54c8;
+}
+
+/* Hover effects */
+.theme-toggle:hover i,
+.search button:hover,
+.theme-toggle:hover {
+    color: #fff;
+}
+
+/* Dark theme specific styles */
+.dark-theme .card {
+    background: linear-gradient(135deg, #1e1e1e, #121212);
+    color: #fff;
+}
+
+.dark-theme .search input {
+    background: #2d2d2d;
+    color: #fff;
+    border: 2px solid #8f94fb;
+}
+
+.dark-theme .search input:focus {
+    background: #1e1e1e;
+}
+
+.dark-theme .search button,
+.dark-theme .theme-toggle {
+    background: #8f94fb;
+    color: #fff;
+    border: 2px solid #8f94fb;
+}
+
+.dark-theme .search button:hover,
+.dark-theme .theme-toggle:hover {
+    background: #3b3f88;
+}

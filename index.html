@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- REMIXICONS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
+
+    <!-- IONICONS (Add the Ionicons library link here) -->
+    <!-- TODO: Add Ionicons library link -->
+
+
+    <title>Weather App</title>
+</head>
+<body>
+    <div class="card">
+        <div class="search">
+            <input id="cityInput" type="text" placeholder="Enter city name" spellcheck="false">
+            <button onclick="searchWeather()">
+                <!-- TODO: Add Ionicons search icon here -->
+                <i class="ri-search-line"></i>
+            </button>
+        </div>
+
+        <div class="weather">
+            <div id="weatherIcon" class="weather__icon ion-icon ion-partly-sunny"></div>
+            <h1 id="temperature" class="temp">--°C</h1>
+            <h2 id="cityName" class="city">--</h2>
+            <div class="details">
+                <div class="col">
+                    <!-- TODO: Add Ionicons humidity icon here -->
+                    <i class="ri-water-percent-fill"></i>
+                    <div>
+                        <p id="humidity" class="humidity">--%</p>
+                        <p>Humidity</p>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <!-- TODO: Add Ionicons wind icon here -->
+                    <i class="ri-windy-line"></i>
+                    <div>
+                        <p id="windSpeed" class="wind">-- km/h</p>
+                        <p>Wind Speed</p>
+                    </div>
+                </div>
+            </div>
+
+            <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
+                <i id="themeIcon" class="ri-sun-fill"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const apiKey = "ab94e91ebb15727325d5fde9e677b514";
+        const apiUrl = "https://api.openweathermap.org/data/2.5/weather?&units=metric&q=";
+
+        function getWeatherIcon(weatherCode) {
+            // Map OpenWeatherMap weather condition codes to corresponding Ionicons or other icon library
+            switch (weatherCode) {
+                case '01d':
+                    return 'ion-sun-fill'; // Replace with the appropriate sunny icon
+                case '02d':
+                    return 'ion-sun-cloudy-fill'; // Replace with the appropriate partly sunny icon
+                case '03d':
+                case '04d':
+                    return 'ion-cloudy-fill'; // Replace with the appropriate cloud icon
+                case '09d':
+                case '10d':
+                    return 'ion-heavy-showers-fill'; // Replace with the appropriate rainy icon
+                case '11d':
+                    return 'ion-thunderstorms-fill'; // Replace with the appropriate thunderstorm icon
+                case '13d':
+                    return 'ion-snowy-fill'; // Replace with the appropriate snowy icon
+                default:
+                    return 'ion-partly-sunny'; // Default icon for unknown conditions
+            }
+        }
+
+        function updateWeatherUI(data) {
+            document.getElementById("temperature").textContent = `${data.main.temp}°C`;
+            document.getElementById("cityName").textContent = data.name; // Updated line to use data.name
+            document.getElementById("humidity").textContent = `${data.main.humidity}%`;
+            document.getElementById("windSpeed").textContent = `${data.wind.speed} km/h`;
+
+            const weatherIcon = document.getElementById("weatherIcon");
+            const weatherCode = data.weather[0].icon;
+            const iconClass = getWeatherIcon(weatherCode);
+
+            // Assuming you are using Ionicons
+            weatherIcon.className = `weather__icon ion-icon ${iconClass}`;
+        }
+
+        async function fetchWeatherData(city) {
+            try {
+                const response = await fetch(`${apiUrl}${city}&appid=${apiKey}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    updateWeatherUI(data);
+                } else {
+                    console.error(`City not found or API error. Response status: ${response.status}`);
+                }
+            } catch (error) {
+                console.error('Error fetching weather data:', error);
+            }
+        }
+
+        function searchWeather() {
+            const cityInput = document.getElementById("cityInput");
+            const city = cityInput.value;
+
+            if (city.trim() !== "") {
+                fetchWeatherData(city);
+            } else {
+                alert("Please enter a city name.");
+            }
+        }
+
+        // Adding event listener for Enter key press
+        document.getElementById("cityInput").addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                searchWeather();
+            }
+        });
+
+        // Set default city to Jaipur
+        fetchWeatherData("jaipur");
+
+        // Theme toggle functionality
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById("themeIcon");
+
+            body.classList.toggle("dark-theme");
+            const isDarkMode = body.classList.contains("dark-theme");
+
+            // Change icon based on theme
+            themeIcon.className = isDarkMode ? "ri-moon-fill" : "ri-sun-fill";
+        }
+    </script>
+</body>
+</html>
